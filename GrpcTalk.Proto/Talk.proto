@@ -1,0 +1,28 @@
+﻿syntax = "proto3";
+
+service Talk {
+	rpc GetUser(UserRequest) returns (UserResponse) {} //unary
+	rpc GetUsers(UserRequest) returns (stream UserResponse) {} //server stream
+	rpc AddUsersWithSummary(stream UserRequest) returns (UserSummaryResponse) {} //client stream
+	rpc AddUsersWithResponseForEach(stream UserRequest) returns (stream UserResponse) {} //bidirecional stream
+}
+
+message User {
+	int32 id = 1;
+	string name = 2;
+	repeated string email = 3;
+}
+
+message UserRequest {
+	User user = 1;
+}
+
+message UserResponse {
+	User user = 1;
+}
+
+message UserSummaryResponse {
+	int32 totalUsers = 1;
+	int32 totalFailed = 2;
+	int32 totalSuccessful = 3;
+}
